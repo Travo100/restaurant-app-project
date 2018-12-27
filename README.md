@@ -17,7 +17,7 @@ Once you are in an empty folder run `npm init` to create your `package.json` and
 
 Then you will need install the necessary packages for this project: 
 
-run `npm install body-parser dotenv express express-handlebars mysql2 sequelize yelpv3` in your terminal
+run `npm install dotenv express express-handlebars mysql2 sequelize yelp-fusion` in your terminal
 
 Then using the `sequelize-cli` run the command 
 
@@ -37,19 +37,24 @@ What will be happening here is that when a user clicks on a favorite button, the
 
 You will also need to create your handlebars folders and can follow the documentation for the `express-handlebars` found [here](https://www.npmjs.com/package/express-handlebars#basic-usage)
 
-The `yelpv3` package is the one you are going to use to get results from the Yelp API. The NPM page for this can be found below. Keep in mind that the location paramter can take in a string like "San Diego" and come back with relevant restaurant data. 
+The `yelp-fusion` package is the one you are going to use to get results from the Yelp API. The NPM page for this can be found below. Keep in mind that the location paramter can take in a string like "San Diego" and come back with relevant restaurant data. 
 
 You can find all the documentation here for it at t the following page 
-[https://www.npmjs.com/package/yelpv3](https://www.npmjs.com/package/yelpv3)
+[https://www.npmjs.com/package/yelp-fusion](https://www.npmjs.com/package/yelp-fusion)
 
-When using the app you will need your yelp Client ID and Client Secret to initliaze the constructor for this package to run.
+When using the app you will need your Yelp API Key to use this package on the server-side.
 
 ```
-var Yelp = require('yelpv3');
-
-var yelp = new Yelp({
-    app_id: YOUR_YELP_CLIENT_ID,
-    app_secret: YOUR_YELP_SECRET_KEY
+var yelp = require('yelp-fusion');
+ 
+var client = yelp.client(YOUR-API-KEY);
+ 
+client.search({
+  location: 'San Diego'
+}).then(response => {
+  console.log(response.jsonBody.businesses);
+}).catch(e => {
+  console.log(e);
 });
 ```
 
